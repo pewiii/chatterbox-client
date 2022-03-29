@@ -10,12 +10,16 @@ var MessagesView = {
     // when this view loads.
   },
 
-  render: function() {
+  render: function(data) {
     // TODO: Render _all_ the messages.
+    for (var msg of data) {
+      this.renderMessage(msg);
+    }
   },
 
   renderMessage: function(message) {
     // TODO: Render a single message.
+    this.$chats.append(message.text + '<br>');
   },
 
   handleClick: function(event) {
