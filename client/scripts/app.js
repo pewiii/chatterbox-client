@@ -27,13 +27,17 @@ var App = {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
+      RoomsView.render(data);
       MessagesView.render(data);
-
       // TODO: Use the data to update Messages and Rooms
       // and re-render the corresponding views.
-      setTimout(function() {
-        App.fetch();
-      }, 5000);
+      callback();
+      // setTimeout(function() {
+      //   App.startSpinner();
+      //   App.fetch(App.stopSpinner);
+      // }, 2000);
+      // RoomsView.render();
+      Rooms.checkRoomSelected();
     });
   },
 

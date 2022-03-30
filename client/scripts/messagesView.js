@@ -12,14 +12,27 @@ var MessagesView = {
 
   render: function(data) {
     // TODO: Render _all_ the messages.
+    var room = Rooms.checkRoomSelected();
+    // console.log(room);
     for (var msg of data) {
-      this.renderMessage(msg);
+      var roomname = JSON.stringify(msg.roomname);
+      if (roomname === room) {
+        MessagesView.renderMessage(msg);
+      }
     }
+    //console.log(RoomsView.rooms);
   },
 
-  renderMessage: function(message) {
+  renderMessage: function(message, prepend) {
     // TODO: Render a single message.
-    this.$chats.append(message.text + '<br>');
+    if (prepend) {
+      // this.$chats.prepend(message.roomname + '    ' + message.username + '    ' + message.text + '<br>' + '<hr>');
+      this.$chats.prepend(message.text + '<br>' + '<hr>');
+    } else {
+      this.$chats.append(message.text + '<br>' + '<hr>');
+      // this.$chats.append(message.roomname + '     ' + message.username + '    ' + message.text + '<br>' + '<hr>');
+
+    }
   },
 
   handleClick: function(event) {
