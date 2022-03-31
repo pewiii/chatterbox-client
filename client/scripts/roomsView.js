@@ -23,13 +23,22 @@ var RoomsView = {
     }
   },
 
-  renderRoom: function(roomname) {
+  renderRoom: function(roomname, newRoom) {
     // TODO: Render out a single room.
+    if (newRoom) {
+
+      RoomsView.$select.prepend('<option value="' + roomname + '">' + roomname + '</option>');
+      RoomsView.$select.val(roomname).change();
+    }
+    Rooms.selectRoom(roomname);
+    App.fetch();
   },
 
   handleChange: function(event) {
     // TODO: Handle a user selecting a different room.
-    console.log(event.target[1].innerHTML);
+
+    RoomsView.renderRoom(event.target.value);
+
     // $(this).text
     //Rooms.selectRoom();
   },
@@ -37,6 +46,9 @@ var RoomsView = {
   handleClick: function(event) {
     // TODO: Handle the user clicking the "Add Room" button.
     console.log('click');
+    var room = $('#message').val();
+    RoomsView.renderRoom(room, true);
+    //console.log(RoomsView.$select.children().length);
   }
 
 };
