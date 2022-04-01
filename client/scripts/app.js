@@ -32,9 +32,9 @@ var App = {
       // TODO: Use the data to update Messages and Rooms
       // and re-render the corresponding views.
       callback();
-      setTimeout(function() {
-        App.fetch();
-      }, 4000);
+      // setTimeout(function() {
+      //   App.fetch();
+      // }, 4000);
       // RoomsView.render();
       Rooms.checkRoomSelected();
     });

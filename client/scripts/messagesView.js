@@ -21,19 +21,23 @@ var MessagesView = {
         MessagesView.renderMessage(msg);
       }
     }
-    $('.addfriend').on('click', MessagesView.handleClick);
+    $('.username').on('click', MessagesView.handleClick);
     //console.log(RoomsView.rooms);
   },
 
   renderMessage: function(message, prepend) {
     // TODO: Render a single message.
-    var msg = JSON.stringify(message.text);
+    var msg = MessageView.render(message);
+    if (Friends.checkFriend(message.username)) {
+      // msg = '<div style="color: blue">' + msg + '</div>';
+      msg = '<span class="friendsColor">' + msg + '</span>';
+    }
     if (prepend) {
-      this.$chats.prepend('<div>' + message.roomname + '    ' + '<span class="addfriend">' + message.username + '</span>' + '    ' + msg + '</div>');
+      this.$chats.prepend(msg);
       // this.$chats.prepend(message.text + '<br>' + '<hr>');
     } else {
       // this.$chats.append(message.text + '<br>' + '<hr>');
-      this.$chats.append('<div>' + message.roomname + '    ' + '<span class="addfriend">' + message.username + '</span>' + '    ' + msg + '</div>');
+      this.$chats.append(msg);
     }
 
   },
@@ -43,6 +47,7 @@ var MessagesView = {
     // (this should add the sender to the user's friend list).
     console.log(event.target.innerText);
     Friends.addFriend(event.target.innerText);
+    App.fetch();
   }
 
 };

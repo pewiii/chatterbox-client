@@ -10,10 +10,10 @@ var Friends = {
   // TODO: Define methods which allow you to add, toggle,
   // and check the friendship status of other users.
   addFriend: function(friendName) {
-    _data[friendName] = true;
+    Friends._data[friendName] = true;
   },
 
-  getFriends: function() {
-    return Object.keys(Friends._data);
+  checkFriend: function(name) {
+    return Friends._data[name] !== undefined;
   }
 };
