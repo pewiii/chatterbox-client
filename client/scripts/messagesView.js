@@ -8,38 +8,30 @@ var MessagesView = {
   initialize: function() {
     // TODO: Perform any work which needs to be done
     // when this view loads.
-  },
-
-  render: function(data) {
-    // TODO: Render _all_ the messages.
-    MessagesView.$chats.empty();
-    var room = Rooms.checkRoomSelected();
-    // console.log(room);
-    for (var msg of data) {
-      var roomname = msg.roomname || 'null';
-      if (roomname === room) {
-        MessagesView.renderMessage(msg);
-      }
-    }
     $('.username').on('click', MessagesView.handleClick);
-    //console.log(RoomsView.rooms);
   },
 
-  renderMessage: function(message, prepend) {
-    // TODO: Render a single message.
-    var msg = MessageView.render(message);
-    if (Friends.checkFriend(message.username)) {
-      // msg = '<div style="color: blue">' + msg + '</div>';
-      msg = '<span class="friendsColor">' + msg + '</span>';
-    }
-    if (prepend) {
-      this.$chats.prepend(msg);
-      // this.$chats.prepend(message.text + '<br>' + '<hr>');
-    } else {
-      // this.$chats.append(message.text + '<br>' + '<hr>');
-      this.$chats.append(msg);
-    }
+  render: function() {
+    // TODO: Render _all_ the messages.
+    var room = Rooms.checkRoomSelected();
+    var messages = Messages.getMessages(room);
+    _.each(messages, function(message) {
+      if (Friends.toggleStatus(message.username)) {
+        message.friend = 'friend';
+      } else {
+        message.friend = 'nofriend';
+      }
+      message = MessageView.render(message);
+      MessagesView.$chats.append(message);
+    });
+    MessagesView.initialize();
+  },
 
+  renderMessage: function(message) {
+    // TODO: Render a single message.
+    message.friend = Friends.toggleStatus(message.username) ? 'friend' : 'nonfriend';
+    var message = MessageView.render(message);
+    MessagesView.$chats.prepend(message);
   },
 
   handleClick: function(event) {
@@ -47,7 +39,8 @@ var MessagesView = {
     // (this should add the sender to the user's friend list).
     console.log(event.target.innerText);
     Friends.addFriend(event.target.innerText);
-    App.fetch();
+    MessagesView.$chats.empty();
+    MessagesView.render();
   }
 
 };

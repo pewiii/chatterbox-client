@@ -13,7 +13,7 @@ var Friends = {
     Friends._data[friendName] = true;
   },
 
-  checkFriend: function(name) {
+  toggleStatus: function(name) {
     return Friends._data[name] !== undefined;
   }
 };

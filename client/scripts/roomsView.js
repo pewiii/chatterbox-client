@@ -14,24 +14,22 @@ var RoomsView = {
     RoomsView.$button.on('click', RoomsView.handleClick);
   },
 
-  render: function(data) {
+  render: function() {
     // TODO: Render out the list of rooms.
-    for (var msg of data) {
-      if (Rooms.checkRoomExists(msg.roomname)) { continue; }
-      RoomsView.$select.append('<option value="' + msg.roomname + '">' + msg.roomname + '</option>');
-      Rooms.addRoom(msg.roomname);
-    }
+    var rooms = Rooms.getRooms();
+    _.each(rooms, function(room) {
+      RoomsView.$select.append('<option value="' + room + '">' + room + '</option>');
+    });
+
   },
 
-  renderRoom: function(roomname, newRoom) {
+  renderRoom: function(roomname) {
     // TODO: Render out a single room.
-    if (newRoom) {
-
-      RoomsView.$select.prepend('<option value="' + roomname + '">' + roomname + '</option>');
-      RoomsView.$select.val(roomname).change();
-    }
-    Rooms.selectRoom(roomname);
-    App.fetch();
+    MessagesView.$chats.empty();
+    Rooms.add(roomname);
+    RoomsView.render();
+    RoomsView.$select.val(roomname);
+    MessagesView.render();
   },
 
   handleChange: function(event) {
@@ -39,16 +37,13 @@ var RoomsView = {
 
     RoomsView.renderRoom(event.target.value);
 
-    // $(this).text
-    //Rooms.selectRoom();
   },
 
   handleClick: function(event) {
     // TODO: Handle the user clicking the "Add Room" button.
-    console.log('click');
     var room = $('#message').val();
-    RoomsView.renderRoom(room, true);
-    //console.log(RoomsView.$select.children().length);
+    RoomsView.renderRoom(room);
+    console.log(room);
   }
 
 };

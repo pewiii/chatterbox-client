@@ -9,8 +9,12 @@ var Rooms = {
 
   // TODO: Define methods which allow you to add rooms, update the list,
   // mark a room as selected, etc.
-  addRoom: function(roomName) {
+  add: function(roomName) {
     Rooms._data[roomName] = roomName;
+  },
+
+  getRooms: function() {
+    return Object.keys(Rooms._data);
   },
 
   checkRoomExists: function(roomName) {
@@ -18,16 +22,7 @@ var Rooms = {
   },
 
   checkRoomSelected: function() {
-    if (Rooms._data._selected === undefined) {
-      var room = $('#rooms select').find(':selected').text();
-      Rooms.selectRoom(room);
-      return room;
-    } else {
-      return Rooms._data._selected;
-    }
+    return $('#rooms select').find(':selected').text();
   },
 
-  selectRoom: function(roomName) {
-    Rooms._data._selected = roomName;
-  }
 };
