@@ -16,6 +16,9 @@ var MessagesView = {
     var room = Rooms.checkRoomSelected();
     var messages = Messages.getMessages(room);
     _.each(messages, function(message) {
+      if (message.text.includes('<script')) {
+        return;
+      }
       if (Friends.toggleStatus(message.username)) {
         message.friend = 'friend';
       } else {

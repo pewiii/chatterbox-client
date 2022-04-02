@@ -122,4 +122,20 @@ describe('chatterbox', function() {
       Parse.create.restore();
     });
   });
+
+  describe('events', function() {
+    it('should return all messages from a specific room', function() {
+      sinon.spy(Messages, 'getMessages');
+      App.initialize();
+      var msgin = {roomname: 'tr', username: 'user', text: 'Test Message'};
+      Messages.addMessage(msgin);
+      msgin = JSON.stringify([msgin]);
+      var msgout = JSON.stringify(Messages.getMessages('tr'));
+      console.log(Messages._data);
+      expect(Messages.getMessages.called).to.be.true;
+      expect(msgout).to.equal(msgin);
+
+    });
+
+  });
 });
