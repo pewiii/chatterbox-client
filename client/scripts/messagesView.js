@@ -22,6 +22,7 @@ var MessagesView = {
         message.friend = 'nofriend';
       }
       message = MessageView.render(message);
+      message.text;
       MessagesView.$chats.append(message);
     });
     MessagesView.initialize();

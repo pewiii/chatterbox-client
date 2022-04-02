@@ -18,6 +18,7 @@ var FormView = {
     Parse.create(message, function(data) {
       console.log('success');
       console.log(data);
+      Messages.addMessage(data[0]);
       MessagesView.renderMessage(data[0]);
     }, function(data) {
       console.log('POST Fail:  ' + JSON.stringify(data));

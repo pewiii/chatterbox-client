@@ -16,19 +16,23 @@ var RoomsView = {
 
   render: function() {
     // TODO: Render out the list of rooms.
+    RoomsView.$select.empty();
     var rooms = Rooms.getRooms();
     _.each(rooms, function(room) {
       RoomsView.$select.append('<option value="' + room + '">' + room + '</option>');
     });
-
+    RoomsView.renderRoom('lobby');
   },
 
   renderRoom: function(roomname) {
     // TODO: Render out a single room.
     MessagesView.$chats.empty();
+    if (!Rooms.checkRoomExists(roomname)) {
+      RoomsView.$select.append('<option value="' + roomname + '">' + roomname + '</option>');
+    }
     Rooms.add(roomname);
-    RoomsView.render();
     RoomsView.$select.val(roomname);
+
     MessagesView.render();
   },
 
@@ -42,8 +46,11 @@ var RoomsView = {
   handleClick: function(event) {
     // TODO: Handle the user clicking the "Add Room" button.
     var room = $('#message').val();
+    RoomsView.$select.append('<option value="' + room + '">' + room + '</option>');
+    Rooms.add(room);
     RoomsView.renderRoom(room);
     console.log(room);
   }
+
 
 };
